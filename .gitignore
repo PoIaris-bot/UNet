@@ -124,5 +124,5 @@ dmypy.json
 .pyre/
 
 .idea/
-param/
+param/*.pth
 result/
