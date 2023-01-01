@@ -25,11 +25,11 @@ if __name__ == '__main__':
     opt = optim.Adam(unet.parameters(), amsgrad=True)
     loss_func = nn.BCELoss()
 
-    loss = 0
-    avg_loss = 0
     epoch = 1
     while epoch <= args.epochs:
-        for i, (image, segment_image) in enumerate(data_loader):
+        loss = 0
+        avg_loss = 0
+        for batch, (image, segment_image) in enumerate(data_loader):
             image, segment_image = image.cuda(), segment_image.cuda()
 
             output_image = unet(image)
@@ -41,9 +41,9 @@ if __name__ == '__main__':
 
             loss = train_loss.item()
             avg_loss += loss
-            if i % 100 == 0:
+            if batch % 100 == 0:
                 print('\repoch: {:>5d}/{:<5d} batch: {:>5d}/{:<5d} loss: {:^12.8f} average loss: {:^12.8f}'.format(
-                    epoch, args.epochs, i, len(data_loader) - 1, loss, avg_loss / (i + 1)
+                    epoch, args.epochs, batch, len(data_loader) - 1, loss, avg_loss / (batch + 1)
                 ), end='')
                 torch.save(unet.state_dict(), args.weight_path)
 

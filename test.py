@@ -52,5 +52,5 @@ if __name__ == '__main__':
 
         error = sqrt((x - x0) ** 2 + (y - y0) ** 2)
         avg_error += error
-        max_error = max_error if max_error >= error else error
+        max_error = error if error > max_error else max_error
     print(f'average error: {avg_error / len(image_names)} maximum error: {max_error}')
